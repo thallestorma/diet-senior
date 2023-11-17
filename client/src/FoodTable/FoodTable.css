@@ -1,0 +1,65 @@
+.food-table {
+    /* width: 500px; */
+    margin: 0 auto;
+    background-color: #0d94e8;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 2rem;
+    gap: 1rem;
+}
+
+.food-table table {
+    background-color: white;
+    border: 2px solid black;
+    /* border-spacing: 1rem; */
+    border-color: black;
+    border-collapse: collapse;
+    color: #0073ba;
+}
+
+.food-table table,
+.food-table td,
+.food-table th {
+    border: 2px solid black;
+    padding: 0.5rem;
+}
+
+.food-table .buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.food-table .buttons button {
+    border: 1px solid black;
+    padding: 0.25rem 0.5rem;
+    border-radius: 5px;
+    background-color: white;
+    color: #0d94e8;
+}
+
+.modal {
+    display: flex;
+    position: absolute;
+    background-color: white;
+    border: 2px solid black;
+    padding: 5rem;
+}
+
+.modal form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.modal form .input-line {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.modal form .input-line input {
+    max-width: 200px;
+}
