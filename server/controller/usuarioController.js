@@ -63,8 +63,27 @@ const deletarUsuario = async (req, res) => {
   }
 };
 
+const login = async (req, res) => {
+  try {
+    const { usuario, senha } = req.body;
+
+    const usuarioAutenticado = await usuarioRepository.loginUsuario(usuario, senha);
+
+    if (!usuarioAutenticado) {
+      return res.status(401).json({ error: 'Credenciais inválidas' });
+    }
+
+    res.json({ message: 'Login bem-sucedido', usuario: { id: usuarioAutenticado.id, usuario: usuarioAutenticado.usuario } });
+  } catch (error) {
+    console.error('Erro ao autenticar usuário:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+};
+
 module.exports = {
   cadastrarUsuario,
   editarUsuario,
   deletarUsuario,
+  login,
 };
+
