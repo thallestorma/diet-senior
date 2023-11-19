@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
+
 import './App.css';
-import { FoodTable } from './FoodTable/FoodTable';
+import Menu from './Menu/Menu';
 
 function App() {
     return (
@@ -9,8 +10,10 @@ function App() {
                 <h1>Diet Senior</h1>
             </header>
 
+            <Menu />
+
             <main className='container'>
-                <FoodTable />
+                <Outlet />
             </main>
 
             <footer></footer>

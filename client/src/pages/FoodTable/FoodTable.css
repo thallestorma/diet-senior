@@ -38,28 +38,5 @@
     border-radius: 5px;
     background-color: white;
     color: #0d94e8;
-}
-
-.modal {
-    display: flex;
-    position: absolute;
-    background-color: white;
-    border: 2px solid black;
-    padding: 5rem;
-}
-
-.modal form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.modal form .input-line {
-    display: flex;
-    justify-content: space-between;
-    gap: 2rem;
-}
-
-.modal form .input-line input {
-    max-width: 200px;
+    cursor: pointer;
 }

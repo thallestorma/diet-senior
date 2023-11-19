@@ -1,0 +1,12 @@
+.calculator {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    background-color: #0d94e8;
+    padding: 20px;
+}
+
+.calculator h3 {
+    color: white;
+}

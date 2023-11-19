@@ -1,0 +1,21 @@
+.modal {
+    display: flex;
+    position: absolute;
+    background-color: white;
+    border: 2px solid black;
+    padding: 5rem;
+    background-color: #0d94e8;
+    border-radius: 10px;
+}
+
+.modal .close-button {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    border: 1px solid black;
+}

@@ -1,5 +1,6 @@
 [
     {
+        "id": 1,
         "name": "Pão francês",
         "calories": 135,
         "quantity": {
@@ -8,6 +9,7 @@
         }
     },
     {
+        "id": 2,
         "name": "Tomate seco",
         "calories": 43,
         "quantity": {
@@ -16,6 +18,7 @@
         }
     },
     {
+        "id": 3,
         "name": "Ovo",
         "calories": 82,
         "quantity": {
@@ -24,6 +27,7 @@
         }
     },
     {
+        "id": 4,
         "name": "Arroz",
         "calories": 130,
         "quantity": {

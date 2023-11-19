@@ -1,0 +1,39 @@
+.calories {
+    background-color: #0d94e8;
+    padding: 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+}
+
+.calories .progress-bar {
+    height: 50px;
+    width: 100%;
+    background-color: whitesmoke;
+    border-radius: 40px;
+}
+
+.calories .progress-bar div {
+    height: 100%;
+    width: 50%;
+    background-color: red;
+    border-radius: 40px;
+    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.calories .progress-bar span {
+    padding: 10px;
+    color: black;
+    font-weight: 900;
+}
+
+.calories h1 {
+    font-size: 42px;
+    color: white;
+    width: 450px;
+    font-weight: 400;
+}
