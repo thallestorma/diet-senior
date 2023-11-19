@@ -1,11 +1,11 @@
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 require('dotenv').config();
 
-const db = mysql.createConnection(process.env.DATABASE_URL);
+const pool = mysql.createPool(process.env.DATABASE_URL);
 
 const obterCaloriasDoAlimento = async (nomeAlimento) => {
   try {
-    const [rows] = await db.promise().query('SELECT calorias FROM alimentos WHERE nome = ?', [nomeAlimento]);
+    const [rows] = await pool.query('SELECT calorias FROM alimentos WHERE nome = ?', [nomeAlimento]);
     if (rows.length > 0) {
       return rows[0].calorias;
     }
@@ -17,7 +17,7 @@ const obterCaloriasDoAlimento = async (nomeAlimento) => {
 
 const obterTotalCaloriasConsumidas = async (usuarioId) => {
   try {
-    const [rows] = await db.promise().query('SELECT total_calorias FROM consumo_diario WHERE usuario_id = ? AND data = CURDATE()', [usuarioId]);
+    const [rows] = await pool.query('SELECT total_calorias FROM consumo_diario WHERE usuario_id = ? AND data = CURDATE()', [usuarioId]);
     if (rows.length > 0) {
       return rows[0].total_calorias;
     }
@@ -29,14 +29,19 @@ const obterTotalCaloriasConsumidas = async (usuarioId) => {
 
 const atualizarTotalCaloriasConsumidas = async (usuarioId, totalCalorias) => {
   try {
-    await db.promise().query('INSERT INTO consumo_diario (usuario_id, data, total_calorias) VALUES (?, CURDATE(), ?) ON DUPLICATE KEY UPDATE total_calorias = ?', [usuarioId, totalCalorias, totalCalorias]);
+    const [rows] = await pool.query('SELECT COUNT(*) AS count FROM consumo_diario WHERE usuario_id = ? AND data = CURDATE()', [usuarioId]);
+    const count = rows[0].count;
+
+    if (count > 0) {
+      // Atualiza o valor se já existe uma linha para o usuário na data atual
+      await pool.query('UPDATE consumo_diario SET total_calorias = ? WHERE usuario_id = ? AND data = CURDATE()', [totalCalorias, usuarioId]);
+    } else {
+      // Insere um novo registro se não existir uma linha correspondente
+      await pool.query('INSERT INTO consumo_diario (usuario_id, data, total_calorias) VALUES (?, CURDATE(), ?)', [usuarioId, totalCalorias]);
+    }
   } catch (error) {
     throw new Error(`Erro ao atualizar total de calorias consumidas: ${error.message}`);
   }
 };
 
-module.exports = { 
-  obterCaloriasDoAlimento,
-  obterTotalCaloriasConsumidas,
-  atualizarTotalCaloriasConsumidas
-};
+module.exports = { obterCaloriasDoAlimento, obterTotalCaloriasConsumidas, atualizarTotalCaloriasConsumidas };

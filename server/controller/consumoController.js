@@ -43,7 +43,4 @@ const obterTotalCaloriasDiarias = async (req, res) => {
   }
 };
 
-module.exports = {
-  calcularCalorias,
-  obterTotalCaloriasDiarias
-  };
+module.exports = { calcularCalorias, obterTotalCaloriasDiarias };
