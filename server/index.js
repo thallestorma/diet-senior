@@ -1,16 +1,30 @@
 const express = require('express');
-const usuarioController = require('./controllers/usuarioController');
-const alimentoController = require('./controllers/alimentoController');
-const consumoController = require('./controllers/consumoController');
+const mysql = require('mysql2');
+const usuarioController = require('./controller/usuarioController');
+const alimentoController = require('./controller/alimentoController');
+const consumoController = require('./controller/consumoController');
+require('dotenv').config(); // Carregar variáveis de ambiente do arquivo .env
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+// Configuração da conexão com o banco de dados
+const db = mysql.createConnection(process.env.DATABASE_URL);
+
+// Conectar ao banco de dados
+db.connect((err) => {
+  if (err) {
+    console.error('Erro ao conectar ao banco de dados:', err);
+  } else {
+    console.log('Conexão ao banco de dados bem-sucedida!');
+  }
 });
+
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+  });
 
 // Rotas de Usuários
 app.post('/usuarios', usuarioController.cadastrarUsuario);

@@ -1,4 +1,4 @@
-// repositories/imcRepository.js
+
 const calcularIMC = (peso, altura) => {
     const imc = peso / Math.pow(altura, 2);
     let classificacao;
