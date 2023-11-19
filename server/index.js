@@ -3,17 +3,16 @@ const mysql = require('mysql2');
 const usuarioController = require('./controller/usuarioController');
 const alimentoController = require('./controller/alimentoController');
 const consumoController = require('./controller/consumoController');
-require('dotenv').config(); // Carregar variáveis de ambiente do arquivo .env
+const imcController = require('./controller/imcController');
+require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-// Configuração da conexão com o banco de dados
 const db = mysql.createConnection(process.env.DATABASE_URL);
 
-// Conectar ao banco de dados
 db.connect((err) => {
   if (err) {
     console.error('Erro ao conectar ao banco de dados:', err);
@@ -32,6 +31,7 @@ app.put('/usuarios/:id', usuarioController.editarUsuario);
 app.delete('/usuarios/:id', usuarioController.deletarUsuario);
 app.post('/login', usuarioController.login);
 
+
 // Rotas de Alimentos
 app.post('/alimentos', alimentoController.cadastrarAlimento);
 app.get('/alimentos', alimentoController.listarAlimentos);
@@ -41,6 +41,9 @@ app.delete('/alimentos/:id', alimentoController.deletarAlimento);
 // Rota de Consumo Diário
 app.post('/calcularCalorias', consumoController.calcularCalorias);
 app.get('/totalCaloriasDiarias/:usuarioId', consumoController.obterTotalCaloriasDiarias);
+
+//Rota Calcular IMC
+app.post('/calcular-imc', imcController.calcularIMC);
 
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}`);

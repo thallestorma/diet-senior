@@ -56,11 +56,10 @@ const loginUsuario = async (usuario, senha) => {
         if (err) {
           reject(err);
         } else {
-          // Verifica se algum usuário foi encontrado com as credenciais fornecidas
           if (results.length > 0) {
-            resolve(results[0]); // Retorna o usuário encontrado
+            resolve(results[0]);
           } else {
-            resolve(null); // Retorna null caso não encontre nenhum usuário
+            resolve(null);
           }
         }
       }

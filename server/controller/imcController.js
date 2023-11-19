@@ -1,4 +1,3 @@
-// controllers/imcController.js
 const imcRepository = require('../repositories/imcRepository');
 
 const calcularIMC = (req, res) => {
