@@ -39,8 +39,8 @@ app.put('/alimentos/:id', alimentoController.editarAlimento);
 app.delete('/alimentos/:id', alimentoController.deletarAlimento);
 
 // Rota de Consumo Diário
-app.post('/consumo', consumoController.adicionarConsumo);
-app.get('/consumo-diario', consumoController.obterConsumoDiario);
+app.post('/calcularCalorias', consumoController.calcularCalorias);
+app.get('/totalCaloriasDiarias/:usuarioId', consumoController.obterTotalCaloriasDiarias);
 
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}`);
