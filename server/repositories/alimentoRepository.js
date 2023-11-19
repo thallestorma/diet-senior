@@ -65,7 +65,3 @@ module.exports = {
   editarAlimento,
   deletarAlimento,
 };
-
-
-//Agora você tem uma API que permite cadastrar, listar, editar e deletar alimentos. 
-//Certifique-se de criar a tabela alimentos no seu banco de dados com as colunas apropriadas.

@@ -1,4 +1,3 @@
-// controllers/alimentoController.js
 const alimentoRepository = require('../repositories/alimentoRepository');
 
 const cadastrarAlimento = async (req, res) => {
@@ -36,11 +35,11 @@ const editarAlimento = async (req, res) => {
       quantidade
     );
 
-    if (!alimentoAtualizado) {
+    if (!alimentoAtualizado.affectedRows) {
       return res.status(404).json({ error: 'Alimento não encontrado' });
     }
 
-    res.json(alimentoAtualizado);
+    res.json({ message: 'Alimento atualizado com sucesso' });
   } catch (error) {
     console.error('Erro ao editar alimento:', error);
     res.status(500).json({ error: 'Erro interno do servidor' });
@@ -53,7 +52,7 @@ const deletarAlimento = async (req, res) => {
 
     const alimentoDeletado = await alimentoRepository.deletarAlimento(id);
 
-    if (!alimentoDeletado) {
+    if (!alimentoDeletado.affectedRows) {
       return res.status(404).json({ error: 'Alimento não encontrado' });
     }
 

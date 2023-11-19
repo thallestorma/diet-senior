@@ -45,8 +45,3 @@ app.get('/consumo-diario', consumoController.obterConsumoDiario);
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}`);
 });
-
-//Certifique-se de criar a tabela consumo_diario no seu banco de dados com as colunas apropriadas. 
-//Agora, você pode adicionar um item da lista de alimentos e verificar o consumo diário de calorias com a rota /consumo-diario.
-//Essa rota retornará a quantidade total de calorias consumidas até agora.
-// Certifique-se de ajustar a estrutura do seu banco de dados conforme necessário.

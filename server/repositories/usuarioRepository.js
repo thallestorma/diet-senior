@@ -47,8 +47,30 @@ const deletarUsuario = async (id) => {
   });
 };
 
+const loginUsuario = async (usuario, senha) => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      'SELECT * FROM usuarios WHERE usuario = ? AND senha = ? LIMIT 1',
+      [usuario, senha],
+      (err, results) => {
+        if (err) {
+          reject(err);
+        } else {
+          // Verifica se algum usuário foi encontrado com as credenciais fornecidas
+          if (results.length > 0) {
+            resolve(results[0]); // Retorna o usuário encontrado
+          } else {
+            resolve(null); // Retorna null caso não encontre nenhum usuário
+          }
+        }
+      }
+    );
+  });
+};
+
 module.exports = {
   cadastrarUsuario,
   editarUsuario,
   deletarUsuario,
+  loginUsuario,
 };
