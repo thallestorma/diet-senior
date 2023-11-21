@@ -7,57 +7,66 @@ export default function BMICalculator() {
     const [weight, setWeight] = useState('');
     const [message, setMessage] = useState('');
 
-    const handleClickCalculator = () => {
-        const heightInMeters = height / 100;
-        const bmi = (weight / (heightInMeters * heightInMeters)).toFixed(2);
+    const handleClickCalculator = (e) => {
+        e.preventDefault();
 
-        console.log('bmi', bmi);
+        if (weight && height) {
+            const heightInMeters = height / 100;
+            const bmi = (weight / (heightInMeters * heightInMeters)).toFixed(2);
 
-        let message = '';
+            console.log('bmi', bmi);
 
-        if (bmi < 18.5) {
-            message = 'Abaixo do normal';
-        } else if (bmi >= 18.5 && bmi < 25) {
-            message = 'Normal';
-        } else if (bmi >= 25 && bmi < 30) {
-            message = 'Sobrepeso';
-        } else if (bmi >= 30 && bmi < 35) {
-            message = 'Obesidade grau I';
-        } else if (bmi >= 35 && bmi < 40) {
-            message = 'Obesidade grau II';
-        } else {
-            message = 'Obesidade grau III';
+            let message = '';
+
+            if (bmi < 18.5) {
+                message = 'Abaixo do normal';
+            } else if (bmi >= 18.5 && bmi < 25) {
+                message = 'Normal';
+            } else if (bmi >= 25 && bmi < 30) {
+                message = 'Sobrepeso';
+            } else if (bmi >= 30 && bmi < 35) {
+                message = 'Obesidade grau I';
+            } else if (bmi >= 35 && bmi < 40) {
+                message = 'Obesidade grau II';
+            } else {
+                message = 'Obesidade grau III';
+            }
+
+            setMessage(message);
         }
-
-        setMessage(message);
     };
 
     return (
         <div className='calculator'>
-            <div className='input-line'>
-                <label htmlFor='weight'>Peso (em kg)</label>
-                <input
-                    type='number'
-                    id='weight'
-                    name='weight'
-                    minLength='1'
-                    value={weight}
-                    onChange={(e) => setWeight(e.target.value)}
-                />
-            </div>
-            <div className='input-line'>
-                <label htmlFor='height'>Altura (em cm)</label>
+            <form onSubmit={handleClickCalculator}>
+                <h3>Calculadora de IMC</h3>
+                <div className='input-line'>
+                    <label htmlFor='weight'>Peso (em kg)</label>
+                    <input
+                        type='number'
+                        id='weight'
+                        name='weight'
+                        min='1'
+                        value={weight}
+                        onChange={(e) => setWeight(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className='input-line'>
+                    <label htmlFor='height'>Altura (em cm)</label>
 
-                <input
-                    type='number'
-                    id='height'
-                    name='height'
-                    minLength='1'
-                    value={height}
-                    onChange={(e) => setHeight(e.target.value)}
-                />
-            </div>
-            <button onClick={handleClickCalculator}>Calcular</button>
+                    <input
+                        type='number'
+                        id='height'
+                        name='height'
+                        min='1'
+                        value={height}
+                        onChange={(e) => setHeight(e.target.value)}
+                        required
+                    />
+                </div>
+                <button>Calcular</button>
+            </form>
 
             {message && <h3>Resultado: {message}</h3>}
         </div>

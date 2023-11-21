@@ -6,7 +6,7 @@ export default function Form({ handleSubmit, handleClose, children }) {
             {children}
 
             <button type='submit'>Salvar</button>
-            <button onClick={handleClose}>Fechar</button>
+            {handleClose && <button onClick={handleClose}>Fechar</button>}
         </form>
     );
 }

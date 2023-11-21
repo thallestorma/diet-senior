@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { useState, useEffect } from 'react';
 
 import './FoodTable.css';
 import data from './data.json';
@@ -7,6 +6,7 @@ import Modal from '../../Modal/Modal';
 import Form from '../../Form/Form';
 import Input from '../../Input/Input';
 import Consumption from '../../Consumption/Consumption';
+import { AuthConsumer } from '../../auth';
 
 export default function FoodTable() {
     const [foods, setFoods] = useState(data);
@@ -15,9 +15,24 @@ export default function FoodTable() {
     const [name, setName] = useState('');
     const [calories, setCalories] = useState('');
     const [quantityValue, setQuantityValue] = useState('');
-    const [quantityUnity, setQuantityUnity] = useState('gr');
-
     const [isConsumptionModalOpen, setIsConsumptionModalOpen] = useState(false);
+
+    const auth = AuthConsumer();
+
+    useEffect(() => {
+        async function fetchData() {
+            const response = await fetch('http://localhost:3000/alimentos', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            const foods = await response.json();
+            console.log('foods', foods);
+            setFoods(foods);
+        }
+        fetchData();
+    }, []);
 
     const handleClickAddToTable = () =>
         setIsAddToTableModalOpen(
@@ -32,31 +47,52 @@ export default function FoodTable() {
 
     const handleSubmitModal = (e) => {
         e.preventDefault();
+        console.log(name, calories, quantityValue);
 
-        console.log(name, calories, quantityValue, quantityUnity);
+        if (name !== '' && calories > 0 && quantityValue > 0) {
+            const addFood = async (data) => {
+                try {
+                    const response = await fetch(
+                        'http://localhost:3000/alimentos',
+                        {
+                            method: 'POST',
+                            headers: {
+                                'content-type': 'application/json',
+                            },
+                            body: JSON.stringify(data),
+                        }
+                    );
 
-        if (name !== '' && calories > 0 && quantityValue > 0 && quantityUnity) {
-            setFoods((foods) => {
-                return [
-                    ...foods,
-                    {
-                        id: uuidv4(),
-                        name,
-                        calories,
-                        quantity: {
-                            value: quantityValue,
-                            unit: quantityUnity,
-                        },
-                    },
-                ];
+                    const food = await response.json();
+                    console.log(food);
+
+                    if (food?.insertId) {
+                        setFoods((prevFood) => {
+                            return [
+                                ...prevFood,
+                                {
+                                    id: food.insertId,
+                                    ...data,
+                                },
+                            ];
+                        });
+
+                        setName('');
+                        setCalories('');
+                        setQuantityValue('');
+
+                        setIsAddToTableModalOpen(false);
+                    }
+                } catch (error) {
+                    console.log('error', error);
+                }
+            };
+
+            addFood({
+                nome: name,
+                calorias: parseInt(calories),
+                quantidade: parseInt(quantityValue),
             });
-
-            setName('');
-            setCalories('');
-            setQuantityValue('');
-            setQuantityUnity('');
-
-            setIsAddToTableModalOpen(false);
         }
     };
 
@@ -71,38 +107,33 @@ export default function FoodTable() {
     return (
         <>
             <div className='food-table'>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Alimento</th>
-                            <th>Calorias</th>
-                            <th>Quantidade</th>
-                            <th>Ação</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {foods.map((food) => {
-                            return (
-                                <tr key={food.id}>
-                                    <td>{food.name}</td>
-                                    <td>{food.calories}kcal</td>
-                                    <td>
-                                        {food.quantity.value}{' '}
-                                        {food.quantity.unit}
-                                    </td>
-                                    <td>
-                                        <button
-                                            onClick={() =>
-                                                handleClickConsumption(food)
-                                            }>
-                                            Registrar consumo
-                                        </button>
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
+                <h3>Tabela de alimentos</h3>
+                <div className='grid-table'>
+                    <div className='line header'>
+                        <span>Alimento</span>
+                        <span>Calorias</span>
+                        <span>Referência</span>
+                        <span>Ação</span>
+                    </div>
+                    {foods.map((food) => {
+                        return (
+                            <div className='line' key={food.id}>
+                                <span>{food.nome}</span>
+                                <span>{food.calorias} kcal</span>
+                                <span>{food.quantidade} gr</span>
+                                <span>
+                                    <button
+                                        onClick={() =>
+                                            handleClickConsumption(food)
+                                        }>
+                                        Registrar consumo
+                                    </button>
+                                </span>
+                            </div>
+                        );
+                    })}
+                </div>
+
                 <div className='buttons'>
                     <button onClick={handleClickAddToTable}>
                         Adicionar alimento à tabela
@@ -126,37 +157,21 @@ export default function FoodTable() {
 
                         <Input
                             type='number'
+                            id='quantity_value'
+                            labelName='Quantidade (gr)'
+                            value={quantityValue}
+                            required={true}
+                            onChange={(e) => setQuantityValue(e.target.value)}
+                        />
+
+                        <Input
+                            type='number'
                             id='calories'
                             labelName='Calorias'
                             value={calories}
                             required={true}
                             onChange={(e) => setCalories(e.target.value)}
                         />
-
-                        <Input
-                            type='number'
-                            id='quantity_value'
-                            labelName='Quantidade'
-                            value={quantityValue}
-                            required={true}
-                            onChange={(e) => setQuantityValue(e.target.value)}
-                        />
-
-                        <div className='input-line'>
-                            <label htmlFor='quantity_unity'>Unidade</label>
-
-                            <select
-                                name='quantity_unity'
-                                id='quantity_unity'
-                                value={quantityUnity}
-                                onChange={(e) =>
-                                    setQuantityUnity(e.target.value)
-                                }>
-                                <option value='gr'>gr</option>
-                                <option value='un'>un</option>
-                                <option value='ml'>ml</option>
-                            </select>
-                        </div>
                     </Form>
                 </Modal>
             )}
@@ -164,6 +179,7 @@ export default function FoodTable() {
             {isConsumptionModalOpen && (
                 <Consumption
                     food={food}
+                    auth={auth}
                     handleClose={handleConsumptionCloseButton}
                 />
             )}

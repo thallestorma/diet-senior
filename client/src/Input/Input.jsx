@@ -8,6 +8,8 @@ export default function Input({
     required,
     minValue = 1,
     onChange,
+    disabled = false,
+    step = 1,
 }) {
     return (
         <div className='input-line'>
@@ -18,7 +20,9 @@ export default function Input({
                 id={id}
                 value={value}
                 required={required}
-                {...(type === 'number' && { minLength: parseInt(minValue) })}
+                disabled={disabled}
+                {...(type === 'number' && { min: parseInt(minValue) })}
+                {...(type === 'number' && step !== 1 && { step: step })}
                 onChange={onChange}
             />
         </div>

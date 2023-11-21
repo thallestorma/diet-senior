@@ -6,17 +6,21 @@ import Menu from './Menu/Menu';
 function App() {
     return (
         <>
-            <header>
-                <h1>Diet Senior</h1>
-            </header>
+            <div className='container'>
+                <header>
+                    <h1>Diet Senior</h1>
+                </header>
 
-            <Menu />
+                <Menu />
 
-            <main className='container'>
-                <Outlet />
-            </main>
+                <main>
+                    <div className='content-container'>
+                        <Outlet />
+                    </div>
+                </main>
 
-            <footer></footer>
+                <footer></footer>
+            </div>
         </>
     );
 }
