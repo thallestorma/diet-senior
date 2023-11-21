@@ -1,46 +1,62 @@
 const consumoRepository = require('../repositories/consumoRepository');
 
 const calcularCalorias = async (req, res) => {
-  try {
-    const { usuarioId, nomeAlimento, quantidade } = req.body;
+    try {
+        const { usuarioId, alimentoId, quantidade } = req.body;
 
-    const caloriasDoAlimento = await consumoRepository.obterCaloriasDoAlimento(nomeAlimento);
+        const [caloriasDoAlimento, quantidadeAlimento] =
+            await consumoRepository.obterCaloriasDoAlimento(alimentoId);
 
-    if (caloriasDoAlimento !== null) {
-      let totalCaloriasConsumidas = await consumoRepository.obterTotalCaloriasConsumidas(usuarioId);
+        if (caloriasDoAlimento !== null && quantidadeAlimento !== null) {
+            const caloriasPorGrama = caloriasDoAlimento / quantidadeAlimento;
 
-      if (!totalCaloriasConsumidas) {
-        totalCaloriasConsumidas = 0;
-      }
+            let totalCaloriasConsumidas =
+                await consumoRepository.obterTotalCaloriasConsumidas(usuarioId);
 
-      const caloriasDoConsumo = caloriasDoAlimento * quantidade;
-      totalCaloriasConsumidas += caloriasDoConsumo;
+            if (!totalCaloriasConsumidas) {
+                totalCaloriasConsumidas = 0;
+            }
 
-      await consumoRepository.atualizarTotalCaloriasConsumidas(usuarioId, totalCaloriasConsumidas);
+            const caloriasDoConsumo = caloriasPorGrama * quantidade;
+            totalCaloriasConsumidas += caloriasDoConsumo;
 
-      res.json({ totalCalorias: totalCaloriasConsumidas });
-    } else {
-      res.status(404).json({ message: 'Alimento não encontrado' });
+            await consumoRepository.atualizarTotalCaloriasConsumidas(
+                usuarioId,
+                totalCaloriasConsumidas
+            );
+
+            res.json({ totalCalorias: totalCaloriasConsumidas });
+        } else {
+            res.status(404).json({ message: 'Alimento não encontrado' });
+        }
+    } catch (error) {
+        res.status(500).json({
+            message: 'Erro ao calcular as calorias',
+            error: error.message,
+        });
     }
-  } catch (error) {
-    res.status(500).json({ message: 'Erro ao calcular as calorias', error: error.message });
-  }
 };
 
 const obterTotalCaloriasDiarias = async (req, res) => {
-  try {
-    const { usuarioId } = req.params;
+    try {
+        const { usuarioId } = req.params;
 
-    const totalCaloriasConsumidas = await consumoRepository.obterTotalCaloriasConsumidas(usuarioId);
+        const totalCaloriasConsumidas =
+            await consumoRepository.obterTotalCaloriasConsumidas(usuarioId);
 
-    if (totalCaloriasConsumidas !== null) {
-      res.json({ totalCalorias: totalCaloriasConsumidas });
-    } else {
-      res.status(404).json({ message: 'Registro não encontrado para este usuário' });
+        if (totalCaloriasConsumidas !== null) {
+            res.json({ totalCalorias: totalCaloriasConsumidas });
+        } else {
+            res.status(404).json({
+                message: 'Registro não encontrado para este usuário',
+            });
+        }
+    } catch (error) {
+        res.status(500).json({
+            message: 'Erro ao obter as calorias diárias',
+            error: error.message,
+        });
     }
-  } catch (error) {
-    res.status(500).json({ message: 'Erro ao obter as calorias diárias', error: error.message });
-  }
 };
 
 module.exports = { calcularCalorias, obterTotalCaloriasDiarias };
