@@ -1,0 +1,52 @@
+.calories {
+    background-color: #0d94e8;
+    padding: 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    align-items: center;
+}
+
+.calories button {
+    width: max-content;
+    padding: 10px;
+}
+
+.calories .progress-bar {
+    height: 50px;
+    width: 100%;
+    background-color: whitesmoke;
+    border-radius: 40px;
+}
+
+.calories .progress-bar div {
+    height: 100%;
+    width: 50%;
+    border-radius: 40px;
+    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.calories .progress-bar div.red {
+    background-color: red;
+}
+
+.calories .progress-bar div.green {
+    background-color: #48f539;
+}
+
+.calories .progress-bar span {
+    padding: 10px;
+    color: black;
+    font-weight: 900;
+}
+
+.calories h1 {
+    font-size: 42px;
+    color: white;
+    width: 450px;
+    font-weight: 400;
+}

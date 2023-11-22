@@ -1,0 +1,9 @@
+.login {
+    padding: 20px;
+    background-color: #0d94e8;
+    color: white;
+}
+
+.login h2 {
+    margin-bottom: 1.125rem;
+}

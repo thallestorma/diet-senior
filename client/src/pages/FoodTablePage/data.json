@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "name": "Pão francês",
+        "calories": 135,
+        "quantity": {
+            "value": 1,
+            "unit": "unidade"
+        }
+    },
+    {
+        "id": 2,
+        "name": "Tomate seco",
+        "calories": 43,
+        "quantity": {
+            "value": 1,
+            "unit": "unidade"
+        }
+    },
+    {
+        "id": 3,
+        "name": "Ovo",
+        "calories": 82,
+        "quantity": {
+            "value": 1,
+            "unit": "unidade"
+        }
+    },
+    {
+        "id": 4,
+        "name": "Arroz",
+        "calories": 130,
+        "quantity": {
+            "value": 1,
+            "unit": "gramas"
+        }
+    }
+]

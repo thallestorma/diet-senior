@@ -1,0 +1,14 @@
+.input-line {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    align-items: center;
+}
+
+.input-line label {
+    color: white;
+}
+
+.input-line input {
+    max-width: 200px;
+}

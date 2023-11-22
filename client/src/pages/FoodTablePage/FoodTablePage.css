@@ -1,0 +1,63 @@
+.food-table {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 2rem;
+    gap: 1rem;
+    padding: 20px 0;
+}
+
+.food-table h3 {
+    color: white;
+}
+
+.food-table .grid-table {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    background-color: white;
+    width: 550px;
+}
+
+.food-table .grid-table .line {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    text-align: center;
+    align-items: center;
+}
+
+.food-table .grid-table .line span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.food-table .grid-table .line span button {
+    margin: 5px;
+}
+
+.food-table .grid-table .line span:not(:last-child) {
+    border-right: 1px solid black;
+}
+
+.food-table .grid-table .line:not(:last-child) {
+    border-bottom: 1px solid black;
+}
+.food-table .grid-table .line.header {
+    font-weight: 700;
+}
+
+.food-table .buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.food-table .buttons button {
+    border: 1px solid black;
+    padding: 0.25rem 0.5rem;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+}
