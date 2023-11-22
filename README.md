@@ -36,7 +36,7 @@ Clonar este projeto e entrar no diretório.
 - Para iniciar o app front-end, rodar o comando `npm run dev`.
 
 
-## Integrantes do projeto
+## Integrantes do projeto (Grupo 03)
 Thalles Diego Verneti Torma
 
 Leonardo Nestor Costa
