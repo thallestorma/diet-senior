@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { AuthConsumer } from '../../auth';
-import './Calories.css';
+import './CaloriesPage.css';
 import { useNavigate } from 'react-router-dom';
 
-export default function Calories() {
+export default function CaloriesPage() {
     const navigate = useNavigate();
     const auth = AuthConsumer();
     const [consumption, setConsumption] = useState(0);
@@ -14,7 +14,9 @@ export default function Calories() {
     useEffect(() => {
         const getCalories = async () => {
             const response = await fetch(
-                `http://localhost:3000/totalCaloriasDiarias/${auth?.auth?.usuario?.id}`,
+                `${import.meta.env.VITE_API_BASE_URL}/totalCaloriasDiarias/${
+                    auth?.auth?.usuario?.id
+                }`,
                 {
                     method: 'GET',
                     headers: {
@@ -24,7 +26,6 @@ export default function Calories() {
             );
 
             const calories = await response.json();
-            console.log(calories);
 
             if (calories?.totalCalorias) {
                 setConsumption(calories.totalCalorias);
@@ -52,7 +53,9 @@ export default function Calories() {
                 <b>{totalConsumption}</b> calorias diárias
             </h1>
 
-            <button onClick={() => navigate('/')}>Registrar consumo</button>
+            <button onClick={() => navigate('/food-table')}>
+                Registrar consumo
+            </button>
         </div>
     );
 }

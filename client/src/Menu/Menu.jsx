@@ -7,8 +7,6 @@ export default function Menu() {
     const navigate = useNavigate();
     const auth = AuthConsumer();
 
-    console.log('auth', auth);
-
     const handleLogout = () => {
         auth.logout();
         navigate('/');

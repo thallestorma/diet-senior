@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import './BMICalculator.css';
+import './BMICalculatorPage.css';
 
-export default function BMICalculator() {
+export default function BMICalculatorPage() {
     const [height, setHeight] = useState('');
     const [weight, setWeight] = useState('');
     const [message, setMessage] = useState('');
@@ -13,8 +13,6 @@ export default function BMICalculator() {
         if (weight && height) {
             const heightInMeters = height / 100;
             const bmi = (weight / (heightInMeters * heightInMeters)).toFixed(2);
-
-            console.log('bmi', bmi);
 
             let message = '';
 

@@ -25,7 +25,7 @@ export default function ChangeDataPage() {
 
         const changeUserData = async (data) => {
             const response = await fetch(
-                `http://localhost:3000/usuarios/${userId}`,
+                `${import.meta.env.VITE_API_BASE_URL}/usuarios/${userId}`,
                 {
                     method: 'PUT',
                     headers: {
@@ -37,7 +37,7 @@ export default function ChangeDataPage() {
 
             const newUserData = await response.json();
 
-            console.log(newUserData);
+            return newUserData;
         };
 
         if (username && password && weight && height && age && gender) {

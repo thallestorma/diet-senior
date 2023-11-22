@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { AuthConsumer } from '../../auth.jsx';
 import Input from '../../Input/Input.jsx';
 
-import './Login.css';
+import './LoginPage.css';
 
-export default function Login() {
+export default function LoginPage() {
     const navigate = useNavigate();
     const auth = AuthConsumer();
     const [username, setUsername] = useState('');
@@ -13,10 +13,7 @@ export default function Login() {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        console.log('auth login', auth);
-        console.log('auth username, password', username, password);
         auth.login(username, password).then((res) => {
-            console.log('response', res);
             navigate('/');
         });
     };

@@ -13,12 +13,9 @@ export default function Consumption({ handleClose, food, auth }) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        console.log('food', food);
-        console.log('auth', auth);
-
         const insertConsumption = async (data) => {
             const response = await fetch(
-                'http://localhost:3000/calcularCalorias',
+                `${import.meta.env.VITE_API_BASE_URL}/calcularCalorias`,
                 {
                     method: 'POST',
                     headers: {
@@ -33,8 +30,6 @@ export default function Consumption({ handleClose, food, auth }) {
             if (consumption?.totalCalorias) {
                 setSuccess(true);
             }
-
-            console.log(consumption);
         };
 
         if (auth?.auth?.usuario?.id && food?.id)

@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react';
 
-import './FoodTable.css';
-import data from './data.json';
+import './FoodTablePage.css';
 import Modal from '../../Modal/Modal';
 import Form from '../../Form/Form';
 import Input from '../../Input/Input';
 import Consumption from '../../Consumption/Consumption';
 import { AuthConsumer } from '../../auth';
 
-export default function FoodTable() {
-    const [foods, setFoods] = useState(data);
+export default function FoodTablePage() {
+    const [foods, setFoods] = useState([]);
     const [food, setFood] = useState({});
     const [isAddToTableModalOpen, setIsAddToTableModalOpen] = useState(false);
     const [name, setName] = useState('');
@@ -21,14 +20,17 @@ export default function FoodTable() {
 
     useEffect(() => {
         async function fetchData() {
-            const response = await fetch('http://localhost:3000/alimentos', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+            const response = await fetch(
+                `${import.meta.env.VITE_API_BASE_URL}/alimentos`,
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+
             const foods = await response.json();
-            console.log('foods', foods);
             setFoods(foods);
         }
         fetchData();
@@ -47,13 +49,12 @@ export default function FoodTable() {
 
     const handleSubmitModal = (e) => {
         e.preventDefault();
-        console.log(name, calories, quantityValue);
 
         if (name !== '' && calories > 0 && quantityValue > 0) {
             const addFood = async (data) => {
                 try {
                     const response = await fetch(
-                        'http://localhost:3000/alimentos',
+                        `${import.meta.env.VITE_API_BASE_URL}/alimentos`,
                         {
                             method: 'POST',
                             headers: {
@@ -64,7 +65,6 @@ export default function FoodTable() {
                     );
 
                     const food = await response.json();
-                    console.log(food);
 
                     if (food?.insertId) {
                         setFoods((prevFood) => {

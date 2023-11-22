@@ -4,15 +4,15 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import './index.css';
 import App from './App.jsx';
-import FoodTable from './pages/FoodTable/FoodTable.jsx';
-import Home from './pages/Home/Home.jsx';
+import FoodTablePage from './pages/FoodTablePage/FoodTablePage.jsx';
+import HomePage from './pages/HomePage/HomePage.jsx';
 import ErrorPage from './pages/ErrorPage/ErrorPage.jsx';
-import Calories from './pages/Calories/Calories.jsx';
-import BMICalculator from './pages/BMICalculator/BMICalculator.jsx';
-import Login from './pages/LoginPage/Login.jsx';
+import CaloriesPage from './pages/CaloriesPage/CaloriesPage.jsx';
+import BMICalculatorPage from './pages/BMICalculatorPage/BMICalculatorPage.jsx';
+import LoginPage from './pages/LoginPage/LoginPage.jsx';
 import ChangeDataPage from './pages/ChangeDataPage/ChangeDataPage.jsx';
-import { RequireAuth, AuthProvider } from './auth.jsx';
 import RegisterPage from './pages/RegisterPage/RegisterPage.jsx';
+import { RequireAuth, AuthProvider } from './auth.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
@@ -23,12 +23,12 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                         path='/'
                         element={<App />}
                         errorElement={<ErrorPage />}>
-                        <Route path='/login' element={<Login />} />
+                        <Route path='/login' element={<LoginPage />} />
                         <Route
                             index
                             element={
                                 <RequireAuth>
-                                    <Home />
+                                    <HomePage />
                                 </RequireAuth>
                             }
                         />
@@ -36,7 +36,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                             path='/food-table'
                             element={
                                 <RequireAuth>
-                                    <FoodTable />
+                                    <FoodTablePage />
                                 </RequireAuth>
                             }
                         />
@@ -44,7 +44,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                             path='/calories'
                             element={
                                 <RequireAuth>
-                                    <Calories />
+                                    <CaloriesPage />
                                 </RequireAuth>
                             }
                         />
@@ -52,7 +52,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                             path='/calculator'
                             element={
                                 <RequireAuth>
-                                    <BMICalculator />
+                                    <BMICalculatorPage />
                                 </RequireAuth>
                             }
                         />

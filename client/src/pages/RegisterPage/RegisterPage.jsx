@@ -12,29 +12,28 @@ export default function RegisterPage() {
     const [password, setPassword] = useState('');
     const [weight, setWeight] = useState('');
     const [height, setHeight] = useState('');
-    const [gender, setGender] = useState('');
+    const [gender, setGender] = useState('M');
     const [age, setAge] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('auth login', auth);
-        console.log('auth username, password', username, password);
 
         const registerUser = async (data) => {
-            const response = await fetch(`http://localhost:3000/usuarios`, {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
+            const response = await fetch(
+                `${import.meta.env.VITE_API_BASE_URL}/usuarios`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                }
+            );
 
             const newUser = await response.json();
 
-            console.log(newUser);
+            return newUser;
         };
-
-        console.log(username, password, weight, height, age, gender);
 
         if (username && password && weight && height && age && gender) {
             registerUser({
@@ -53,7 +52,7 @@ export default function RegisterPage() {
 
     return (
         <div className='register'>
-            <h1>Cadastro de usuário</h1>
+            <h3>Cadastro de usuário</h3>
             <form onSubmit={handleSubmit}>
                 <Input
                     type='text'
@@ -99,7 +98,6 @@ export default function RegisterPage() {
                         name='gender'
                         id='gender'
                         value={gender}
-                        defaultValue={'M'}
                         onChange={(e) => setGender(e.target.value)}>
                         <option value='M'>Masculino</option>
                         <option value='F'>Feminino</option>

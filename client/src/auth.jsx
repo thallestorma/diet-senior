@@ -15,16 +15,17 @@ const useAuth = () => {
                 usuario: username,
                 senha: password,
             };
-            console.log(data);
-            const result = await fetch('http://localhost:3000/login', {
-                method: 'POST',
-                body: JSON.stringify(data),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            }).then((res) => res.json());
 
-            console.log('result', result);
+            const result = await fetch(
+                `${import.meta.env.VITE_API_BASE_URL}/login`,
+                {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            ).then((res) => res.json());
 
             if (result.usuario?.id) {
                 setAuth(result);
@@ -43,15 +44,11 @@ const useAuth = () => {
             setAuth({});
         },
     };
-
-    // return auth;
 };
 
 const RequireAuth = ({ children }) => {
     const auth = AuthConsumer();
     const location = useLocation();
-
-    console.log('auth1', auth);
 
     if (!auth) return;
 

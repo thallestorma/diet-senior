@@ -2,7 +2,6 @@ const usuarioRepository = require('../repositories/usuarioRepository');
 
 const cadastrarUsuario = async (req, res) => {
     try {
-        console.log(req.body);
         const { usuario, senha, peso, altura, sexo, idade } = req.body;
 
         const novoUsuario = await usuarioRepository.cadastrarUsuario(
